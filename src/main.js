@@ -1,6 +1,7 @@
 import './style.css';
 import { fetchCharacters } from './api.js';
 
+
 const container = document.getElementById('characters-container');
 const searchInput = document.getElementById('searchInput');
 const filterStatus = document.getElementById('filterStatus');
@@ -10,6 +11,7 @@ const showFavoritesOnlyCheckbox = document.getElementById('showFavoritesOnly');
 
 let allCharacters = [];
 let favorites = new Set(JSON.parse(localStorage.getItem('favorites') || '[]'));
+
 
 function renderCharacters(characters) {
   container.innerHTML = '';
@@ -25,6 +27,7 @@ function renderCharacters(characters) {
 
     const fav = favorites.has(character.id);
 
+    /* HTML-inhoud van de karakterkaart */
     card.innerHTML = `
       <h3>${character.name}</h3>
       <img src="${character.image}" alt="${character.name}" />
@@ -40,7 +43,7 @@ function renderCharacters(characters) {
 
     container.appendChild(card);
 
-    // Observer animatie direct
+    /* Observer activeert animatie zodra kaart zichtbaar wordt */
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -52,8 +55,8 @@ function renderCharacters(characters) {
     observer.observe(card);
   });
 
-  // Favorietenknop
-  const favButtons = container.querySelectorAll('.favorite-btn');
+  /* Favorietenknop functionaliteit */
+  const favButtons = container.querySelectorAll('.favorite-btn'); /*knop voor favos*/ 
   favButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const id = Number(btn.dataset.id);
@@ -68,6 +71,7 @@ function renderCharacters(characters) {
   });
 }
 
+/* Vult dropdown met locaties */
 function fillLocationDropdown(characters) {
   let foundLocations = [];
   characters.forEach(c => {
@@ -85,6 +89,7 @@ function fillLocationDropdown(characters) {
   });
 }
 
+/*Voert filters sortering en zoekterm toe op de karakterlijst */
 function applyFiltersAndSort() {
   const searchTerm = searchInput.value.toLowerCase();
   const statusValue = filterStatus.value.toLowerCase();
@@ -100,6 +105,7 @@ function applyFiltersAndSort() {
     return matchName && matchStatus && matchLocation && matchFav;
   });
 
+  /*Sorteren op naam (A-Z of Z-A) */
   if (sort === 'az') {
     result.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sort === 'za') {
@@ -109,21 +115,21 @@ function applyFiltersAndSort() {
   renderCharacters(result);
 }
 
-// Start app
+
 fetchCharacters().then(characters => {
   allCharacters = characters;
   fillLocationDropdown(characters);
   applyFiltersAndSort();
 });
 
-// Events
+/* Event listeners voor zoek/filter/sorteer/favorieten */
 searchInput.addEventListener('input', applyFiltersAndSort);
 filterStatus.addEventListener('change', applyFiltersAndSort);
 filterLocation.addEventListener('change', applyFiltersAndSort);
 sortSelect.addEventListener('change', applyFiltersAndSort);
 showFavoritesOnlyCheckbox.addEventListener('change', applyFiltersAndSort);
 
-// Thema toggle
+/* Thema-toggle functionaliteit */
 const themeToggle = document.getElementById('themeToggle');
 document.body.dataset.theme = localStorage.getItem('theme') || 'light';
 
