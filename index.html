@@ -1,13 +1,57 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="nl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Rick and Morty Explorer</title>
+    
+    
   </head>
   <body>
-    <div id="app"></div>
+    <header>
+      <h1>Rick and Morty Explorer</h1>
+
+      <!-- zoek optie -->
+      <input type="text" id="searchInput" placeholder="Zoek op naam..." />
+
+      <!-- Filter status -->
+      <select id="filterStatus">
+        <option value="">Filter op status</option>
+        <option value="alive">alive</option>
+        <option value="dead">dead</option>
+        <option value="unknown">unknown</option>
+      </select>
+
+      <!-- Filter  locatie -->
+      <select id="filterLocation">
+        <option value="">Filter op locatie</option>
+        
+      </select>
+
+      <!-- Sorteeropties -->
+      <select id="sortSelect">
+        <option value="">Sorteer op naam</option>
+        <option value="az">A - Z</option>
+        <option value="za">Z - A</option>
+      </select>
+
+      <!-- Alleen favorieten tonen -->
+      <label>
+        <input type="checkbox" id="showFavoritesOnly" />
+        Toon alleen favorieten
+      </label>
+    </header>
+
+    <button id="themeToggle">Thema wisselen</button>
+
+    <main>
+      <div id="characters-container"></div>
+    </main>
+
+    <footer>
+      <p>Gemaakt door Nicolas Borremans</p>
+      <p>Web Advanced - dynamic-web-project</p>
+    </footer>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
